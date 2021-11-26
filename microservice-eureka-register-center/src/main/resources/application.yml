@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: microservice-eureka-register-center
+logging:
+  level:
+    com.netflix: info
+#eureka:
+#  instance:
+#    hostname: register-center
+#  cli
+---
+spring:
+  profiles: peer1 #指定profile = peer1
+
+server:
+  port: 8761
+eureka:
+  instance:
+    #指定当profile = peer1时服务名是peer1
+    hostname: peer1
+  client:
+    serviceUrl:
+      #将自己注册到peer2和peer3这两个eureka上
+      defaultZone: http://peer2:8762/eureka/,http://peer3:8763/eureka/
+
+---
+spring:
+  profiles: peer2 #指定profile = peer2
+
+server:
+  port: 8762
+eureka:
+  instance:
+    #指定当profile = peer2时服务名是peer2
+    hostname: peer2
+  client:
+    serviceUrl:
+      #将自己注册到peer2和peer3这两个eureka上
+      defaultZone: http://peer1:8761/eureka/,http://peer3:8763/eureka/
+---
+spring:
+  profiles: peer3 #指定profile = peer3
+
+server:
+  port: 8763
+eureka:
+  instance:
+    #指定当profile = peer3时服务名是peer3
+    hostname: peer3
+  client:
+    serviceUrl:
+      #将自己注册到peer2和peer3这两个eureka上
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/

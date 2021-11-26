@@ -1,0 +1,17 @@
+logging:
+  config: classpath:logback-spring.xml #配置各个环境使用的log配置文件
+logback:
+  path: d:/home/work/user/logs # 配置相应的环境log打印路径
+
+---
+spring:
+  profiles: dev #指定profile = peer1
+
+server:
+  port: 8081
+---
+spring:
+  profiles: uat #指定profile = peer1
+
+server:
+  port: 8082
